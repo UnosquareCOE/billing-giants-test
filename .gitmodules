@@ -1,0 +1,3 @@
+[submodule "billing-giants"]
+	path = billing-giants
+	url = git@github.com:UnosquareCOE/billing-giants.git
