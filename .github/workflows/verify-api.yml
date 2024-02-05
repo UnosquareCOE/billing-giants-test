@@ -1,13 +1,9 @@
 name: Verify API
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    paths:
-      - "database/**"
-      - "server/**"
-      - "test/api/**"
 
 jobs:
   verify:
@@ -15,12 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Start docker compose
-        run: docker compose --profile dev up -d --wait && sleep 30
+        run: docker compose -f ./billing-giants/ --profile dev up -d --wait && sleep 30
       - name: Test
-        run:  npm i --prefix ./test/api && (npm test --prefix ./test/api&)
+        run:  npm i --prefix ./api && (npm test --prefix ./api&)
       - name: Output the run Details
         uses: actions/upload-artifact@v3
         if: success()
         with:
           name: TestOutput
-          path: ./test/api/html-report
+          path: ./api/html-report
